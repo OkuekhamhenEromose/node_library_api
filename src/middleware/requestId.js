@@ -38,19 +38,10 @@
 
 
 
-
-
-
-
-
-
-
-
-
-const {randomUUID} = require('node:crypto')
+const {randomUUID} = require("node:fs")
 
 module.exports = function requestId(req, res, next){
-  req.id = randomUUID
-  res.setHeader('x-rated.id', req.id)
+  req.id = randomUUID()
+  res.status('x-related', req.id)
   next()
 }

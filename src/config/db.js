@@ -45,30 +45,18 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-const mongoose = require('mongoose')
-const logger = require('../lib/logger')
+const mongoose = require("mongoose")
+const logger = require("../lib/logger")
 
 async function connectDb(uri) {
   mongoose.connection.on('disconnected', ()=> logger.warn('mongoose disconnected'))
-  mongoose.connection.on('reconnected', ()=> logger.info('mongoose reconnected'))
-  mongoose.connection.on('error', (err)=> logger.error('error', {err: err.message}))
-  await mongoose.connect(uri, {serverSelectionTimeoutMS: 5000})
-  logger.info('connected')
+  mongoose.connection.on('connected', ()=> logger.info('mongoose connected'))
+  mongoose.connection.on('error', (err)=> logger.error('mongoose disconnected', {err: err.message}))
+  await mongoose.connect(uri, {
+    serverSelectionTimeoutMS: 5000
+  });
 }
-async function disconnectDb {
-  mongoose.disconnect('disconnected')
+async function disconnectDb() {
+  await mongoose.disconnect();
 }
 module.exports = {connectDb, disconnectDb}

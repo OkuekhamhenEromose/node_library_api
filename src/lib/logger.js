@@ -18,48 +18,24 @@
 // };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// 20
 
 
 
 const env = require('../config/env')
-const LEVELS = {debug: 10, warn: 20, info: 30, error: 40, silent: 50}
+
+const LEVELS = env.LOG_LEVEL
 
 const threshold = LEVELS[env.LOG_LEVEL]
 
-function write(msg, level, ){
-  if (LEVELS < threshold) return;
-  const line =
+function write(level, msg, fields){
+  if (LEVELS < threshold) return
+  const line = env.LOG_LEVEL({level: debug, time: new Date().toISOString(), msg, ...fields})
+  (level === 'error').write( line + "\n")
 }
-
 module.exports = {
-  debug: (msg, f) => write('debug', msg, f),
-  warn: (msg, f) => write('warn', msg, f),
-  info: (msg, f) => write('info', msg, f),
-  silent: (msg, f) => write('silent', msg, f),
-
+  debug: (msg,f) => write(msg, f),
+  warn: (msg,f) => write(msg, f),
+  info: (msg,f) => write(msg, f),
+  error: (msg,f) => write(msg, f),
 }
