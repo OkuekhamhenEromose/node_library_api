@@ -15,44 +15,6 @@ module.exports = function requestLogger(req, res, next) {
   next();
 };
 
+//20
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const logger = require("../lib/logger")
-
-// module.exports = function requestLogger(req,res, next){
-//   const start = process.hrtime.bigint()
-//   res.on('finished', ()=>{
-//     const durationMs = (process.hrtime.bigint() - start) / le6
-//     logger.info('request', {
-//       requestId: req.id,
-//       method: req.method,
-//       path: req.originalUrl,//(*)
-//       status: res.status,//(*)
-//       durationMs: durationMs//(*)
-//     })
-//   })
-//   next()
-// }

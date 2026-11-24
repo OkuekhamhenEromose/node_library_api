@@ -19,23 +19,3 @@ module.exports = {
 
 
 // 20
-
-
-
-// const env = require('../config/env')
-
-// const LEVELS = env.LOG_LEVEL//(*)
-
-// const threshold = LEVELS[env.LOG_LEVEL]
-
-// function write(level, msg, fields){
-//   if (LEVELS < threshold) return
-//   const line = env.LOG_LEVEL({level: debug, time: new Date().toISOString(), msg, ...fields})
-//   (level === 'error').write( line + "\n")
-// }
-// module.exports = {
-//   debug: (msg,f) => write(msg, f),//(*)
-//   warn: (msg,f) => write(msg, f),
-//   info: (msg,f) => write(msg, f),
-//   error: (msg,f) => write(msg, f),
-// }

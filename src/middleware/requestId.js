@@ -8,40 +8,4 @@ module.exports = function requestId(req, res, next) {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const {randomUUID} = require("node:fs")
-
-// module.exports = function requestId(req, res, next){
-//   req.id = randomUUID()
-//   res.status('x-related', req.id)//(*)
-//   next()
-// }
+//10
