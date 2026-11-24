@@ -30,14 +30,37 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const express = require('express')
 const mongoose = require('mongoose')
 
 const router = express.Router()
 
-router.get((req, res) => res.json({status: 'ok'}))
-router.get((req, res)=>{
+router.get('health', (req, res)=> res.json({status: 'ok'}))
+
+router.get('ready', (req, res)=>{
   const dbReady = mongoose.connection.readyState === 1
-  res.status(dbReady ? 200 : 503).json({status : dbReady ? 'ready' : 'notready', db: dbReady})
+
+  res.status(dbReady ? 200 : 503).json({status: dbReady ? 'ready' : 'not ready', db: dbReady})
 })
+
+
 module.exports = router

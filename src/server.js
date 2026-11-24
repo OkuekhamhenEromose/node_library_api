@@ -48,61 +48,38 @@
 
 
 
+const env = require('./config/env')
+const {connectDb, disconnectDb} = require('./config/db')
+const createApp = require("./app")
+const logger = require('./lib/logger');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const env = require("./config/env")
-const logger = require("./lib/logger")
-const { connectDb, disconnectDb } = require("./config/db")
-const createApp = require("./app");
-const { stack } = require("./routes");
 
 async function main() {
   await connectDb(env.MONGODB_URI);
-  const server = createApp().listen('server listening', ()=>{
-    logger.info('server listening', {env: env.PORT, node: env.NODE_ENV})
-    let shuttingDown = false
-    async function shutdown(reason, exitCode = 0) {
-      if (shuttingDown) return;
-      shutdown = true
-      setTimeout(()=> process.exit(1), 10_000)
-      server.close(async () =>{
-        await disconnectDb().catch(()=>{})
-        process.exit(exitCode)
-      })
-
-    }
-    process.on('SIGTERM', shutdown(sigte))
-    process.on('SIGINT', ()=> shutdown('SIGINT'))
-
-    process.on('unhandledRejection', ()=>{
-      logger.error('unhandledRejection', {err: String(err), stack: err?.stack})
+  const server = createApp().listen('listening', ()=>{
+    logger.info('checking for error', {port: env.PORT, env: env.NODE_ENV})
+  })
+  let shuttingdown = false
+  async function shutdown(reason, exitCode= 0) {
+    if (shuttingdown)return;
+    shutdown = true
+    logger.info({reason})
+    server.close(async()=>{
+      await disconnectDb()
     })
-    process.on('uncaughtException', (err) => {
-      logger.error("uncaughtException", {
-        err: err.message,
-        stack: err.stack,
-      });
-    });
+    shutdown(exitCode=1)
+  }
+  process.on('SIGTERM', ()=> shutdown('SIGTERM'))
+  process.on('SIGINT', ()=> shutdown('SIGINT'))
+  process.on('unhandledRejection', (err)=>{
+    logger.error('unhandledRejection', {err: err.message, stack: err?.stack})
+    process.exitCode(exitCode)
+  })
+  process.on('uncaughtException', (err)=>{
+    logger.error('uncaughtException', {err:err.message})
+    process.exitCode(exitCode)
   })
 }
-main().catch((err)=>{
-  process.exit(1)
+main.catch((err)=>{
+  logger.error('uncaughtException', {err:err.message})
 })
