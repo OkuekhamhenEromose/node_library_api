@@ -7,3 +7,38 @@ const MAX_ACTIVE_LOANS_PER_BORROWER = 3;
 const LOAN_STATUSES = ['active', 'returned'];
 
 module.exports = { CATEGORIES, STATUSES, LOAN_DAYS, MAX_ACTIVE_LOANS_PER_BORROWER, LOAN_STATUSES };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CATEGORIES = ['food', 'entertainment', 'ball', 'cow', 'stew' ]
+STATUSES = ['archived', 'active']
+
+
+module.exports = {CATEGORIES, STATUSES}
